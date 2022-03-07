@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+    * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.canvas {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #fcf1f1;
+  width: 100%;
+  height: 100vh;
+}
+
+.circle {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  width: 80vmin;
+  height: 80vmin;
+  border-radius: 50%;
+  background: #f9e0ae;
+}
+
+.pot {
+  position: absolute;
+  border-bottom: 25vmin solid #835050;
+  border-left: 7vmin solid transparent;
+  border-right: 7vmin solid transparent;
+  height: 0;
+  width: 40vmin;
+  bottom: 15vmin;
+  transform: rotate(180deg);
+  border-radius: 3vmin;
+}
+
+.pot::after {
+  content: "";
+  position: absolute;
+  width: 26vmin;
+  height: 1vmin;
+  background: #000;
+}
+.cactus::before {
+  content: "";
+  position: absolute;
+  width: 5vmin;
+  height: 30vmin;
+  left: 6vmin;
+  background: transparent;
+  border-radius: 50%;
+  border-right: 1vmin solid #335d2d;
+}
+
+.cactus::after {
+  content: "";
+  position: absolute;
+  width: 5vmin;
+  height: 30vmin;
+  right: 6vmin;
+  background: transparent;
+  border-radius: 50%;
+  border-left: 1vmin solid #335d2d;
+}
+
+.cactusSmall::before {
+  content: "";
+  position: absolute;
+  width: 5vmin;
+  height: 20vmin;
+  left: 6vmin;
+  background: transparent;
+  border-radius: 50%;
+  border-right: 1vmin solid #335d2d;
+}
+
+.cactusSmall::after {
+  content: "";
+  position: absolute;
+  width: 5vmin;
+  height: 20vmin;
+  right: 6vmin;
+  background: transparent;
+  border-radius: 50%;
+  border-left: 1vmin solid #335d2d;
+}
+
+.pricks {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-left: 1vmin solid transparent;
+  border-right: 1vmin solid transparent;
+  border-bottom: 7vmin solid #335d2d;
+  transform: rotate(-45deg);
+}
+
+.pricks::before {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 0;
+  top: 5vmin;
+  left: 9vmin;
+  border-left: 1vmin solid transparent;
+  border-right: 1vmin solid transparent;
+  border-bottom: 7vmin solid #335d2d;
+  transform: rotate(90deg);
+}
+
+.pricks::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 0;
+  top: 7vmin;
+  left: -10vmin;
+  border-left: 1vmin solid transparent;
+  border-right: 1vmin solid transparent;
+  border-bottom: 7vmin solid #335d2d;
+}
+
+.pricksRight {
+  position: absolute;
+  width: 0;
+  height: 0;
+  top: -2vmin;
+  left: -1vmin;
+  border-left: 1vmin solid transparent;
+  border-right: 1vmin solid transparent;
+  border-bottom: 7vmin solid #335d2d;
+  transform: rotate(-45deg);
+}
+
+.pricksRight::before {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 0;
+  top: 10vmin;
+  left: 9vmin;
+  border-left: 1vmin solid transparent;
+  border-right: 1vmin solid transparent;
+  border-bottom: 7vmin solid #335d2d;
+  transform: rotate(90deg);
+}
+
+.pricksRight::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 0;
+  top: 4vmin;
+  left: 7vmin;
+  border-left: 1vmin solid transparent;
+  border-right: 1vmin solid transparent;
+  border-bottom: 7vmin solid #335d2d;
+  transform: rotate(60deg);
+}
+
+.cactus {
+  position: absolute;
+  width: 17vmin;
+  height: 15vmin;
+  top: 30vmin;
+  left: 25vmin;
+  background: #799351;
+  border-radius: 45%;
+  border: 1vmin solid #000;
+}
+
+.cactusSmall {
+  position: absolute;
+  width: 17vmin;
+  height:20vmin;
+  top: 44vmin;
+  right: 28vmin;
+  background: #799351;
+  border-radius: 45%;
+  border: 1vmin solid #000;
+}
+
+.cactus.grown {
+    animation: grown 4s 3s forwards;
+}
+
+.cactusSmall.grown {
+    animation: grown-sm 4s 2s forwards;
+}
+
+@keyframes grown {
+    from {
+        height: 15vmin;
+        top: 30vmin;
+    }
+    to {
+        height: 31vmin;
+        top: 15vmin;
+    }
+}
+
+@keyframes grown-sm {
+    from {
+        top: 44vmin;
+    }
+    to {
+        top: 28vmin;
+    }
+}
+
+.water-jar{
+	position: absolute;
+	width: 40px;
+	height: 55px;
+	background-color: #835050;
+	border-radius: 5px;
+	top: -50px;
+	left: 38%;
+	opacity: 0;
+    transform: translateX(-50%);
+	box-shadow: inset -9px 0 15px #835050;
+}
+.water-jar.show {
+	animation: show 10s linear;
+}
+.water-jar:before{
+	position: absolute;
+	content: '';
+	width: 15px;
+	height: 0;
+	left: 40px;
+	top: -5px;
+	border-left: 4px solid transparent;
+	border-right: 4px solid transparent;	
+	border-bottom: 40px solid #835050;
+	transform: rotate(65deg);
+}
+.water-jar:after{
+	position: absolute;
+	content: '';
+	width: 20px;
+	height: 30px;
+	top: 5px;
+	left: -20px;
+	border-radius: 20px 0 0 20px;
+	background-color: transparent;
+	border: 5px solid #835050;
+	box-shadow: 70px -15px 0 -5px #835050;
+}
+@keyframes show{
+	5%{opacity: 1;}
+	7%{transform: rotate(40deg);}
+	24%{opacity: 1;}
+	25%{opacity: 0;}
+}
+.water{
+	position: absolute;
+	width: 20px;
+	height: 90px;
+	border-radius: 50% 50% 0 0;
+	border-right: 4px dashed #0bf;
+	top: 7px;
+	left: calc(40% + 55px);
+	opacity: 1;
+    transform: translateX(-50%);
+	z-index: 1;
+	opacity: 0;
+}
+.water.show {
+	animation: water 10s linear;
+}
+@keyframes water{
+	7%{opacity: 0;}
+	8%{opacity: 1;}
+	21%{opacity: 1;}
+	22%{opacity: 0;}
+}
+.water:before{
+	position: absolute;
+	content: '';
+	width: 45px;
+	height: 105px;
+	top: -2px;
+	left: -10px;
+	border-radius: 70% 80% 20% 0;
+	border-right: 4px dashed #0bf;
+	z-index: 1;
+}
+.water:after{
+	position: absolute;
+	content: '';
+	width: 65px;
+	height: 122px;
+	top: -10px;
+	left: -10px;
+	border-radius: 70% 90% 28% 0;
+	border-right: 4px dashed #0bf;
+	z-index: 1;
+}
+.pot-label {
+    text-align: center;
+    position: absolute;
+    top: 100px;
+    left: 50%;
+    transform: rotate(180deg) translateX(50%);
+    color: #f9e0ae;
+    font-size: 2rem;
+    text-transform: uppercase;
+    opacity: 0;
+}
+
+.pot-label.show {
+    animation: fade 5s 2s forwards;
+}
+
+@keyframes fade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.first-color::first-letter {
+    font-family: Arial, sans-serif;
+    color: #799351;
+}
+
+.init {
+    cursor: pointer;
+    position: absolute;
+    top: 75vmin;
+    background-color: #fcf1f1;
+    height: 10vmin;
+    width: 15vmin;
+    border-radius: 10px;
+}
+
+.water-jar-init:hover {
+    animation-play-state: paused;
+}
+
+.water-jar-init {
+    animation: blink 2s infinite;
+    top: 20px;
+    left: 65px;
+    opacity: 1 !important;
+}
+.water-jar-init{
+	background-color: #799351;
+	box-shadow: inset -9px 0 15px #799351;
+}
+.water-jar-init:before{
+	border-bottom: 40px solid #799351;
+}
+.water-jar-init:after{
+	border: 5px solid #799351;
+	box-shadow: 70px -15px 0 -5px #799351;
+}
+
+@keyframes blink {
+    from {
+        transform: translateX(-50%) scale(1);
+    }
+    50% {
+        transform: translateX(-50%) scale(1.1);
+    }
+    to {
+        transform: translateX(-50%) scale(1);
+    }
+}
+</style>
+</head>
+<body>
+    <div class="canvas">
+        <div class="circle">
+
+            <div class="cactus grown">
+                <div class="pricks"></div>
+            </div>
+
+            <div class="cactusSmall grown">
+                <div class="pricksRight"></div>
+            </div>
+
+            <div class="water-jar"></div>
+            <div class="water"></div>
+
+            <div class="pot">
+                <div class="pot-label first-color">Kaktus <div class="first-color" id="owner">...</div></div>
+            </div>
+
+            <div class="init">
+                <div class="water-jar water-jar-init" id="init"></div>
+            </div>
+
+        </div>
+
+    </div>
+</body>
+<script>
+    (function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        let name = urlParams.get('n');
+
+        if (localStorage.getItem('name') && !name) {
+            name = localStorage.getItem('name')
+        }
+
+        document.querySelector('#owner').innerHTML = name
+    })();
+    
+    document.querySelector('#init').addEventListener('click', () => {
+        document.querySelector('.water-jar').classList.add('show')
+        document.querySelector('.water').classList.add('show')
+        document.querySelector('.pot-label').classList.add('show')
+
+        document.querySelector('.cactusSmall').classList.add('grow')
+        document.querySelector('.cactus').classList.add('grow')
+        document.querySelector('.init').style.display = 'none'
+    })
+</script>
+</html>
